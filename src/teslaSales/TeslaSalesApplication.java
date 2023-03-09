@@ -4,8 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class TeslaSalesApplication {
 	
@@ -26,6 +32,7 @@ public class TeslaSalesApplication {
 		tesla.readCSV(modelXCSV, modelX);
 		
 		System.out.println("Model 3 Yearly Sales Report \n");
+		tesla.printYearlySales(model3);
 		
 		System.out.println("Model S Yearly Sales Report \n");
 		
@@ -43,14 +50,25 @@ public class TeslaSalesApplication {
 			String line;
 			String[] lines;
 			
+			@SuppressWarnings("unused")
 			String header = fr.readLine();
 			
 			while ((line = fr.readLine()) != null) {
 				
 				lines = line.split(",");
-				SalesData sales = new SalesData(lines[0], lines[1]);
+				String parsedDate = lines[0];
+				String parsedSale = lines[1];
+				
+				SalesData sales = new SalesData();
+				
+				LocalDate date = LocalDate.parse(parsedDate, DateTimeFormatter.ofPattern("yy-MMM"));
+				Long sale = Long.parseLong(parsedSale);
+				sales.setDate(date);
+				sales.setSales(sale);
+				
 				list.add(sales);
 			}
+			
 		} finally {
 			
 			if(fr != null) {
@@ -61,9 +79,16 @@ public class TeslaSalesApplication {
 	}
 	
 	public void printYearlySales(List<SalesData> list) {
-		
-	}
 	
+		Map<Object, Long> yearlySales = null;
+		
+		yearlySales = list.stream()
+					      .collect(
+					       Collectors.groupingBy(date -> date.getDate().getYear(), Collectors.summingLong(SalesData::getSales)));
+			
+		yearlySales.forEach((year, sum) -> System.out.println(year + " -> " + sum));
+	}
+
 	public void streamWorstYear() {
 		
 	}

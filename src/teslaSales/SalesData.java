@@ -1,30 +1,35 @@
 package teslaSales;
 
+import java.time.LocalDate;
+
 public class SalesData {
 
-	String date;
-	String sales;
+	LocalDate date;
+	Long sales;
 	
 	SalesData() {
 		
 	}
 	
-	SalesData(String date, String sales) {
+	SalesData(LocalDate date, Long sales) {
 		this.date = date;
 		this.sales = sales;
 	}
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public String getSales() {
+	public Long getSales() {
 		return sales;
 	}
-	public void setSales(String sales) {
-		this.sales = sales;
+	public void setSales(Long sale) {
+		this.sales = sale;
 	}
-	
+	@Override
+	public String toString() {
+		return this.date + " + " + this.sales;
+	}
 	
 }

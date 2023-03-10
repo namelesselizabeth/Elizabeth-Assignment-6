@@ -96,10 +96,10 @@ public class TeslaSalesApplication {
 		
 		System.out.println("\n");
 		
-		Optional<SalesData> bestMonth = null;
+		SalesData bestMonth = null;
 		
 		bestMonth = list.stream()
-						.max(Comparator.comparingLong(SalesData::getSales));
+						.max(Comparator.comparingLong(SalesData::getSales)).get();
 		
 		System.out.println("The best month for Model " + modelNumber + " was: " + bestMonth + "\n");
 	}

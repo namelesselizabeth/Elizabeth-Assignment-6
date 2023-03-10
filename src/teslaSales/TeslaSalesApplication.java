@@ -86,7 +86,7 @@ public class TeslaSalesApplication {
 					      .collect(
 					       Collectors.groupingBy(date -> date.getDate().getYear(), Collectors.summingLong(SalesData::getSales)));
 			
-		yearlySales.forEach((year, sum) -> System.out.println(year + " -> " + sum));
+		
 	}
 
 	public void streamWorstYear() {

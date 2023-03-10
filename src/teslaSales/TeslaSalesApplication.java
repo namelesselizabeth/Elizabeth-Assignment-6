@@ -101,7 +101,14 @@ public class TeslaSalesApplication {
 		bestMonth = list.stream()
 						.max(Comparator.comparingLong(SalesData::getSales)).get();
 		
-		System.out.println("The best month for Model " + modelNumber + " was: " + bestMonth + "\n");
+		System.out.println("The best month for Model " + modelNumber + " was: " + bestMonth.getDate());
+		
+		SalesData worstMonth = null;
+		
+		worstMonth = list.stream()
+						 .min(Comparator.comparingLong(SalesData::getSales)).get();
+		
+		System.out.println("The worst month for Model " + modelNumber + " was "  + worstMonth.getDate() + "\n");
 	}
 
 

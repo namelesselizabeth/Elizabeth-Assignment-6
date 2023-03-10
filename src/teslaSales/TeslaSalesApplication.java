@@ -60,8 +60,7 @@ public class TeslaSalesApplication {
 				
 				SalesData sales = new SalesData();
 				
-				YearMonth date = YearMonth.parse(parsedDate, DateTimeFormatter.ofPattern("yyyy-MMM"));
-				System.out.println(date);
+				YearMonth date = YearMonth.parse(parsedDate, DateTimeFormatter.ofPattern("MMM-yy"));
 				Long sale = Long.parseLong(parsedSale);
 				sales.setDate(date);
 				sales.setSales(sale);

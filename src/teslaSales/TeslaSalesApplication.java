@@ -8,8 +8,10 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TeslaSalesApplication {
@@ -30,12 +32,14 @@ public class TeslaSalesApplication {
 		tesla.readCSV(modelSCSV, modelS);
 		tesla.readCSV(modelXCSV, modelX);
 		
-		System.out.println("Model 3 Yearly Sales Report \n");
-		//tesla.printYearlySales(model3);
+		System.out.println("Model 3 Yearly Sales Report \n----------------------------");
+		tesla.printSales(model3, '3');
 		
-		System.out.println("Model S Yearly Sales Report \n");
+		System.out.println("Model S Yearly Sales Report \n----------------------------");
+		tesla.printSales(modelS, 'S');
 		
-		System.out.println("Model X Yearly Sales Report \n");
+		System.out.println("Model X Yearly Sales Report \n----------------------------");
+		tesla.printSales(modelX, 'X');
 	}
 	
 	public void readCSV(File file, List<SalesData> list) throws IOException {
@@ -77,7 +81,10 @@ public class TeslaSalesApplication {
 		}
 	}
 	
-	public void printYearlySales(List<SalesData> list) {
+	/**
+	 * Group by year (key) and sum the sales of each month
+	 */
+	public void printSales(List<SalesData> list, char modelNumber) {
 	
 		Map<Object, Long> yearlySales = null;
 		
@@ -85,14 +92,17 @@ public class TeslaSalesApplication {
 					      .collect(
 					       Collectors.groupingBy(date -> date.getDate().getYear(), Collectors.summingLong(SalesData::getSales)));
 			
+		yearlySales.forEach((year, sum) -> System.out.println(year + " -> " + sum ));
 		
+		System.out.println("\n");
+		
+		Optional<SalesData> bestMonth = null;
+		
+		bestMonth = list.stream()
+						.max(Comparator.comparingLong(SalesData::getSales));
+		
+		System.out.println("The best month for Model " + modelNumber + " was: " + bestMonth + "\n");
 	}
 
-	public void streamWorstYear() {
-		
-	}
-	
-	public void streamBestYear() {
-		
-	}
+
 }

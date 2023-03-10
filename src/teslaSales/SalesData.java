@@ -1,24 +1,24 @@
 package teslaSales;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class SalesData {
 
-	LocalDate date;
+	YearMonth date;
 	Long sales;
 	
 	SalesData() {
 		
 	}
 	
-	SalesData(LocalDate date, Long sales) {
+	SalesData(YearMonth date, Long sales) {
 		this.date = date;
 		this.sales = sales;
 	}
-	public LocalDate getDate() {
+	public YearMonth getDate() {
 		return date;
 	}
-	public void setDate(LocalDate date) {
+	public void setDate(YearMonth date) {
 		this.date = date;
 	}
 	public Long getSales() {
